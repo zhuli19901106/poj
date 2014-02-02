@@ -22,9 +22,9 @@ void compress(char a[])
 
 int main()
 {
-	char buffer[1000];
+	char buffer[3000];
 
-	while(1)
+	while(true)
 	{
 		gets(buffer);
 		if(strcmp(buffer, "0") == 0)
@@ -42,4 +42,3 @@ int main()
 
 	return 0;
 }
-
