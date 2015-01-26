@@ -14,7 +14,7 @@ int sc;
 vector<int> vps[100];
 vector<int> vsp[10000];
 
-int b[100][10000];
+unsigned char b[100][10000];
 
 typedef struct st{
 	string name;
@@ -44,7 +44,7 @@ int main()
 	while(true){
 		sc = 0;
 		pc = 0;
-		memset(b, 0, 100 * 10000 * sizeof(int));
+		memset(b, 0, 100 * 10000 * sizeof(unsigned char));
 		ms.clear();
 		for(i = 0; i < 100; ++i){
 			vps[i].clear();
@@ -105,4 +105,3 @@ int main()
 
 	return 0;
 }
-

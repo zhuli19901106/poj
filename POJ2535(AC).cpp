@@ -22,6 +22,8 @@ int comp(const void *a, const void *b)
 	sb = (const st *)b;
 	
 	return sa->degree - sb->degree;
+	//return sa->degree > sb->degree;
+	//the commented code is wrong... cost me 2WAs
 }
 
 int main()
@@ -78,4 +80,3 @@ int main()
 	
 	return 0;
 }
-

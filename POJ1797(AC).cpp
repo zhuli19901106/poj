@@ -92,59 +92,7 @@ int main()
 		}
 
 		printf("Scenario #%d:\n%d\n\n", ti, res);
-		continue;
-		
-		pc1 = pc2 = 0;
-		i = 1;
-		while(true){
-			if(i == a1[i]){
-				p1[pc1++] = i;
-				break;
-			}else{
-				p1[pc1++] = i;
-				i = a1[i];
-			}
-		}
-
-		i = n;
-		while(true){
-			if(i == a1[i]){
-				p2[pc2++] = i;
-				break;
-			}else{
-				p2[pc2++] = i;
-				i = a1[i];
-			}
-		}
-
-		i = pc1 - 1;
-		j = pc2 - 1;
-		while(i >= 0 && j >= 0){
-			if(p1[i] == p2[j]){
-				--i;
-				--j;
-			}
-		}
-		++i;
-		++j;
-
-		ra = i;
-		rb = j;
-		res = 99999999;
-		for(i = 0; i < ra; ++i){
-			if(f[p1[i]][p1[i + 1]] < res){
-				res = f[p1[i]][p1[i + 1]];
-			}
-		}
-		for(i = 0; i < rb; ++i){
-			if(f[p2[i]][p2[i + 1]] < res){
-				res = f[p2[i]][p2[i + 1]];
-			}
-		}
-
-		printf("Scenario #%d:\n%d\n\n", ti, res);
 	}
 
 	return 0;
 }
-

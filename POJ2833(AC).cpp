@@ -1,89 +1,56 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <algorithm>
 #include <cstdio>
-#include <vector>
+#include <cstdlib>
 #include <queue>
 using namespace std;
 
-typedef struct st_max {
-	bool operator() (const int &x, const int &y)
-	{
-		return x > y;
-	}
-}st_max;
-
-typedef struct st_min {
-	bool operator() (const int &x, const int &y)
-	{
-		return x < y;
-	}
-}st_min;
+typedef long long int LL;
+priority_queue<int, vector<int>, less<int>> pmin;//root is max
+priority_queue<int, vector<int>, greater<int>> pmax;//root is min
+LL sum;
+int n1, n2, n;
 
 int main()
 {
-	priority_queue<int, vector<int>, st_max> pmax;
-	priority_queue<int, vector<int>, st_min> pmin;
-	int n, n1, n2, n3;
-	int tmp;
-	int val;
-	long long sum;
 	int i;
+	int a, x, y;
+	int f[30];
 
-	while (scanf("%d%d%d", &n1, &n2, &n) == 3) {
-		if (!(n1 || n2 || n)) {
-			break;
-		}
-		
-		while (!pmax.empty()) {
-			pmax.pop();
-		}
-		while (!pmin.empty()) {
-			pmin.pop();
-		}
+	while(scanf("%d%d%d", &n1, &n2, &n) == 3 && (n1 || n2 || n)){
 		sum = 0;
-
-		for (i = 0; i < n1; ++i) {
-			scanf("%d", &tmp);
-			sum += tmp;
-			pmax.push(tmp);
+		for(i = 0; i < n1 + n2; ++i){
+			scanf("%d", &f[i]);
+			sum += f[i];
 		}
-
-		for (i = 0; i < n2; ++i) {
-			scanf("%d", &tmp);
-			sum += tmp;
-			if (tmp > pmax.top()) {
-				val = pmax.top();
-				pmax.pop();
-				pmax.push(tmp);
-				pmin.push(val);
-			} else {
-				pmin.push(tmp);
-			}
+		sort(f, f + n1 + n2);
+		for(i = 0; i < n2; ++i){
+			pmin.push(f[i]);
 		}
-
-		n3 = n - n1 - n2;
-		for (i = 0; i < n3; ++i) {
-			scanf("%d", &tmp);
-			sum += tmp;
-			if (tmp > pmax.top()) {
+		for(i = n2; i < n1 + n2; ++i){
+			pmax.push(f[i]);
+		}
+		f[0] = n - n1 - n2;
+		for(i = 0; i < f[0]; ++i){
+			scanf("%d", &a);
+			if(a > pmax.top()){
 				pmax.pop();
-				pmax.push(tmp);
-			} else if (tmp < pmin.top()) {
+				pmax.push(a);
+			}else if(a < pmin.top()){
 				pmin.pop();
-				pmin.push(tmp);
+				pmin.push(a);
 			}
+			sum += a;
 		}
-
-		while (!pmax.empty()) {
+		while(!pmax.empty()){
 			sum -= pmax.top();
 			pmax.pop();
 		}
-
-		while (!pmin.empty()) {
+		while(!pmin.empty()){
 			sum -= pmin.top();
 			pmin.pop();
 		}
-
-		printf("%f\n", 1.0 * sum / n3);
+		printf("%f\n", 1.0 * sum / (n - n1 - n2));
 	}
 
 	return 0;

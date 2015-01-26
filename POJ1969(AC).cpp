@@ -31,7 +31,7 @@ int main()
 		while(n > sum[i]){
 			++i;
 		}
-		//æ³¨æ„å¥‡å¶æ€§é—®é¢˜
+		//×¢ÒâÆæÅ¼ĞÔÎÊÌâ
 		if(i % 2){
 			l = 1 + (sum[i] - n);
 			r = i - (sum[i] - n);
@@ -44,4 +44,3 @@ int main()
 	
 	return 0;
 }
-

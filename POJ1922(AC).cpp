@@ -28,6 +28,7 @@ int main()
 			if(time < 0){
 				continue;
 			}
+			//Multiply before divide to avoid data loss, 1 WA is the price here...
 			time = time + s * 3.6 / speed;
 			if(min_time == -1.0 || min_time > time){
 				min_time = time;
@@ -39,4 +40,3 @@ int main()
 
 	return 0;
 }
-

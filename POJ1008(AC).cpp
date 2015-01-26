@@ -1,56 +1,89 @@
 #define _CRT_SECURE_NO_WARNINGS
+#include <algorithm>
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
+#include <vector>
 using namespace std;
 
-const char HaabMonth[19][10] = {
-	"pop", "no", "zip", "zotz", "tzec",
-	"xul", "yoxkin", "mol", "chen", "yax",
-	"zac", "ceh", "mac", "kankin", "muan",
-	"pax", "koyab", "cumhu", "uayet"
+int r, c, maxlen;
+int h[105][105];
+int len[105][105];
+int d[4][2] = {
+	{-1,  0},
+	{+1,  0},
+	{ 0, -1},
+	{ 0, +1}
 };
-const char TzolkinName[20][10] = {
-	"imix", "ik", "akbal", "kan", "chicchan",
-	"cimi", "manik", "lamat", "muluk", "ok",
-	"chuen", "eb", "ben", "ix", "mem",
-	"cib", "caban", "eznab", "canac", "ahau"
-};
-int haab_year, haab_month, haab_day;
-int tzolkin_year, tzolkin_name, tzolkin_day;
+const int INF = 99999;
+typedef struct st{
+	int i;
+	int j;
+	int h;
+}st;
+st v[10005];
+
+int comparator(const void *a, const void *b)
+{
+	const st *sa, *sb;
+
+	sa = (const st *)a;
+	sb = (const st *)b;
+	if(sa->h > sb->h){
+		return 1;
+	}else{
+		return -1;
+	}
+}
 
 int main()
 {
-	char s[1000];
-	int n, ni;
-	int i;
-	int count;
+	int i, j, k;
 	
 	while(true){
-		if(scanf("%d", &n) != 1){
+		if(scanf("%d%d", &r, &c) != 2){
 			break;
-		}else{
-			printf("%d\n", n);
 		}
-		for(ni = 0; ni < n; ++ni){
-			scanf("%d", &haab_day);
-			scanf("%1s", s);
-			scanf("%s", s);
-			for(i = 0; i < 19; ++i){
-				if(strcmp(s, HaabMonth[i]) == 0){
-					haab_month = i;
+		
+		for(i = 0; i <= r + 1; ++i){
+			for(j = 0; j <= c + 1; ++j){
+				h[i][j] = INF;
+			}
+		}
+		
+		k = 0;
+		for(i = 1; i <= r; ++i){
+			for(j = 1; j <= c; ++j){
+				scanf("%d", &h[i][j]);
+				v[k].i = i;
+				v[k].j = j;
+				v[k].h = h[i][j];
+				++k;
+				len[i][j] = 0;
+			}
+		}
+		qsort(v, r * c, sizeof(st), comparator);
+		
+		for(i = 0; i < r * c; ++i){
+			for(k = 0; k < 4; ++k){
+				if(
+					h[v[i].i][v[i].j] < h[v[i].i + d[k][0]][v[i].j + d[k][1]]
+					&& len[v[i].i][v[i].j] >= len[v[i].i + d[k][0]][v[i].j + d[k][1]]
+				){
+					len[v[i].i + d[k][0]][v[i].j + d[k][1]] = len[v[i].i][v[i].j] + 1;
 				}
 			}
-			scanf("%d", &haab_year);
-			count = haab_day + haab_month * 20 + haab_year * 365;
-			tzolkin_year = count / 260;
-			tzolkin_name = count % 20;
-			tzolkin_day = count % 13;
-			++tzolkin_day;
-			printf("%d %s %d\n", tzolkin_day, TzolkinName[tzolkin_name], tzolkin_year);
 		}
+
+		maxlen = 0;
+		for(i = 0; i < r * c; ++i){
+			if(len[v[i].i][v[i].j] > maxlen){
+				maxlen = len[v[i].i][v[i].j];
+			}
+		}
+
+		printf("%d\n", maxlen + 1);
 	}
 	
 	return 0;
 }
-
